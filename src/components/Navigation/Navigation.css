@@ -1,0 +1,44 @@
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+@media screen and (max-width: 320px) {
+    .navigation {
+        gap: 14px;
+    }
+}
+.navigation_type_white {
+    gap: 50px;
+}
+@media screen and (max-width: 768px) {
+    .navigation_type_white {
+        display: none;
+    }
+}
+.navigation__links {
+    display: flex;
+    gap: 20px;
+}
+.navigation__link {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-decoration: none;
+    color: #000;
+}
+@media screen and (max-width: 320px) {
+    .navigation__link {
+        font-size: 10px;
+    }
+}
+.navigation_type_white {
+    font-size: 14px;
+    line-height: 18px;
+}
+.navigation__profile {
+    width: 100px;
+    height: 30px;
+}

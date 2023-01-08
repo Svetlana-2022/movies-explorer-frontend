@@ -1,0 +1,113 @@
+.popup {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 3;
+    visibility: hidden;
+    opacity: 0;
+    transition: visiblity 0s, opacity 0.5s linear 0.5s;
+}
+.popup_opened {
+    visibility: visible;
+    opacity: 1;
+    transition: visiblity 0s, opacity 0.5s linear 0.5s;
+}
+.popup__container {
+    min-width: 70%;
+    height: 100%;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+@media screen and (max-width: 420px) {
+    .popup__container {
+        min-width: 100%;
+    }
+}
+.popup__button {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.popup__button:before {
+    position: absolute;
+    content: '';
+    height: 22px;
+    border: 3px solid #000000;
+    top: 0;
+    transform: rotate(45deg);
+}
+.popup__button:after {
+    position: absolute;
+    content: '';
+    height: 22px;
+    border: 3px solid #000;
+    top: 0;
+    transform: rotate(-45deg);
+}
+@media screen and (max-width: 420px) {
+    .popup__button {
+        top: 14px;
+        right: 14px;
+    }
+}
+.popup__links {
+    margin-top: 159px;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+}
+@media screen and (max-width: 420px) {
+    .popup__links {
+        margin-top: 144px;
+        width: 300px;
+    }
+}
+.popup__link {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-decoration: none;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 28px;
+}
+@media screen and (max-width: 420px) {
+    .popup__link {
+        margin-bottom: 24px;
+    }
+}
+.popup__link_type_movies {
+    padding-bottom: 7px;
+    text-decoration: underline;
+}
+.popup__link-profile {
+    display: flex;
+    justify-content: center;
+}
+.popup__link-img {
+    width: 100px;
+    height: 30px;
+    /* margin-top: 593px; */
+    margin-top: 90%;
+    margin-bottom: 92px;
+}
+@media screen and (max-width: 420px) {
+    .popup__link-img {
+        /* margin-top: 444px; */
+        margin-bottom: 48px;
+    }
+}
