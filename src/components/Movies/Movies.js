@@ -4,13 +4,13 @@ import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList'
 
 function Movies(props) {
     return (
-        <section className="movies">
+        <main className="movies">
             <SearchForm/>
             <MoviesCardList cards={props.cards}/>
             <div className='card-list__container'>
                 <button type="button" className='card-list__button'>Ещё</button>
             </div>
-        </section>
+        </main>
     )
 }
 

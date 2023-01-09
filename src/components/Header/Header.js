@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
 import './Header.css';
 import logo from '../../images/logo.svg';
-// import profile from '../../images/profile.svg';
 import Navigation from '../Navigation/Navigation';
 
 function Header(props) {
@@ -12,7 +11,7 @@ function Header(props) {
         <Switch>
             <Route exact path="/">
                 {props.loggedIn &&     
-                <div className="header header_type_white">
+                <header className="header header_type_white">
                     <Link to="/" className="header__container-logo">
                         <img className="header__logo" src={logo} alt="логотип"/>
                     </Link>
@@ -20,10 +19,10 @@ function Header(props) {
                         <div type="button" className="header__burger" onClick={props.onPopupClick}></div>
                     </div>
                     <Navigation/>
-                </div>
+                </header>
                 }
                 {!props.loggedIn &&
-                <div className="header">
+                <header className="header">
                     <Link to="/" className="header__container-logo">
                         <img className="header__logo" src={logo} alt="логотип"/>
                     </Link>
@@ -33,11 +32,11 @@ function Header(props) {
                             <Link to="/sign-in" className="header__link">Войти</Link>
                         </div>
                     </div>
-                </div>
+                </header>
             }
             </Route>
             <Route path="/movies">
-                <div className="header header_type_white">
+                <header className="header header_type_white">
                     <Link to="/" className="header__container-logo">
                         <img className="header__logo" src={logo} alt="логотип"/>
                     </Link>
@@ -45,10 +44,10 @@ function Header(props) {
                         <div type="button" className="header__burger" onClick={props.onPopupClick}></div>
                     </div>
                     <Navigation/>
-                </div>
+                </header>
             </Route>
             <Route path="/saved-movies">
-                <div className="header header_type_white">
+                <header className="header header_type_white">
                     <Link to="/" className="header__container-logo">
                         <img type="button" className="header__logo" src={logo} alt="логотип"/>
                     </Link>
@@ -56,10 +55,10 @@ function Header(props) {
                         <div className="header__burger" onClick={props.onPopupClick}></div>
                     </div>
                     <Navigation/>
-                </div>
+                </header>
             </Route>
             <Route path="/profile">
-                <div className="header header_type_white">
+                <header className="header header_type_white">
                     <Link to="/" className="header__container-logo">
                         <img className="header__logo" src={logo} alt="логотип"/>
                     </Link>
@@ -67,7 +66,7 @@ function Header(props) {
                         <div type="button" className="header__burger" onClick={props.onPopupClick}></div>
                     </div>
                     <Navigation/>
-                </div>
+                </header>
             </Route>
         </Switch>
         

@@ -2,7 +2,7 @@ import './SearchForm.css';
  
 function SearchForm() {
     return (
-        <div className="search">
+        <section className="search">
             <form className="form-search" name="search">
                 <fieldset className="search__fieldset search__fieldset_type_input">
                     <input id="film" type="text" className='form-search__input' placeholder='фильм' name='film' minLength={2} required/>
@@ -14,7 +14,7 @@ function SearchForm() {
                     <label htmlFor="switch" className="search__label">Короткометражки</label>
                 </fieldset>
             </form>
-        </div>
+        </section>
     )
 }
 

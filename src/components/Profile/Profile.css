@@ -1,8 +1,13 @@
 .profile {
-    max-width: 410px;
+    max-width: 450px;
     margin: auto;
     padding-top: 74px;
     padding-bottom: 70px;
+}
+@media screen and (max-width: 320px) {
+    .profile {
+        max-width: 286px;
+    }
 }
 .profile__title {
     width: 100%;
@@ -16,6 +21,10 @@
     text-align: center;
     margin-bottom: 123px;
     color: #000;
+}
+.profile__containers {
+    max-width: 90%;
+    margin: auto;
 }
 .profile__container_type_name {
     padding-bottom: 16px;

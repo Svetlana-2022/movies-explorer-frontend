@@ -23,7 +23,6 @@ function AboutMe() {
                     <img className="about-me__item-photo" src={photo} alt="фото"/>
                 </div>
             </div>
-            
         </section>
     )
 }

@@ -9,29 +9,29 @@ function Techs() {
             <div className="techs__content">
                 <h4 className="techs__item-title">7 технологий</h4>
                 <p className="techs__subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
-                <div className="techs__items">
-                    <div className="techs__item">
+                <ul className="techs__items">
+                    <li className="techs__item">
                         <p className="techs__name">HTML</p>
-                    </div>
-                    <div className="techs__item">
+                    </li>
+                    <li className="techs__item">
                         <p className="techs__name">CSS</p>
-                    </div>
-                    <div className="techs__item">
+                    </li>
+                    <li className="techs__item">
                         <p className="techs__name">JS</p>
-                    </div>
-                    <div className="techs__item">
+                    </li>
+                    <li className="techs__item">
                         <p className="techs__name">React</p>
-                    </div>
-                    <div className="techs__item">
+                    </li>
+                    <li className="techs__item">
                         <p className="techs__name">Git</p>
-                    </div>
-                    <div className="techs__item">
+                    </li>
+                    <li className="techs__item">
                         <p className="techs__name">Express.js</p>
-                    </div>
-                    <div className="techs__item">
+                    </li>
+                    <li className="techs__item">
                         <p className="techs__name">mongoDB</p>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </section>
     )

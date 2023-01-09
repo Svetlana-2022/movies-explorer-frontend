@@ -5,18 +5,26 @@ function Portfolio() {
     return (
         <section className="portfolio">
             <h6 className="portfolio__title">Портфолио</h6>
-            <div className="portfolio__subtitle-container">
-                <p className="portfolio__subtitle">Статичный сайт</p>
-                <img className="portfolio__arrow" src={arrow} alt="стрелка"/>
-            </div>
-            <div className="portfolio__subtitle-container">
-                <p className="portfolio__subtitle">Адаптивный сайт</p>
-                <img className="portfolio__arrow" src={arrow} alt="стрелка"/>
-            </div>
-            <div className="portfolio__subtitle-container">
-                <p className="portfolio__subtitle">Одностраничное приложение</p>
-                <img className="portfolio__arrow" src={arrow} alt="стрелка"/>
-            </div>
+            <ul className="portfolio__container">
+                <li className="portfolio__subtitle-container">
+                    <p className="portfolio__subtitle">Статичный сайт</p>
+                    <a href="https://github.com/Svetlana-2022/how-to-learn">
+                        <img className="portfolio__arrow" src={arrow} alt="стрелка"/>
+                    </a>
+                </li>
+                <li className="portfolio__subtitle-container">
+                    <p className="portfolio__subtitle">Адаптивный сайт</p>
+                    <a href="https://github.com/Svetlana-2022/russian-travel">
+                        <img className="portfolio__arrow" src={arrow} alt="стрелка"/>
+                    </a>
+                </li>
+                <li className="portfolio__subtitle-container">
+                    <p className="portfolio__subtitle">Одностраничное приложение</p>
+                    <a href="https://github.com/Svetlana-2022/mesto-react">
+                        <img className="portfolio__arrow" src={arrow} alt="стрелка"/>
+                    </a>
+                </li>
+            </ul>
         </section>
     )
 }

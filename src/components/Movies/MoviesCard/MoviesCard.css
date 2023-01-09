@@ -58,11 +58,13 @@
     opacity: 0.6;
 }
 .card__button-saved{
-    background-image: url(../../../images/saved.svg);
     width: 21px;
-    height: 22px;
+    height: 21px;
+    background: none;
     border: none;
     border-radius: 50%;
+    background-image: url(../../../images/saved.svg);
+    background-size: cover;
     overflow: hidden;
     position: absolute;
     top: 14px;

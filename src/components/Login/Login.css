@@ -25,6 +25,9 @@
 .login__logo {
     width: 38px;
 }
+.login__logo:hover {
+    opacity: 0.6;
+}
 @media screen and (max-width: 320px) {
     .login__logo {
         margin: auto;
@@ -138,6 +141,9 @@
     color: #2BE080;
     text-decoration: none;
     margin-left: 6px;
+}
+.login__singup-link:hover {
+    opacity: 0.6;
 }
 @media screen and (max-width: 320px) {
     .login__singup-link {

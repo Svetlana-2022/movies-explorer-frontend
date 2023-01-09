@@ -11,7 +11,6 @@ import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Footer from "../Footer/Footer";
 import PopupForHeader from '../PopupForHeader/PopupForHeader';
-import NotFound from '../NotFound/NotFound';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -46,7 +45,7 @@ function App() {
     setLoggedIn(true);
   }
   return (
-    <div className="App">
+    <div className="page">
       <Header loggedIn={loggedIn} onPopupClick={() => setPopupOpen(true)}/>
       <Switch>
         <Route exact path="/">
@@ -67,7 +66,6 @@ function App() {
       </Switch>
       <Footer/>
       <PopupForHeader isOpen={popupOpen} onClose={closePopup}/>
-      <NotFound/>
     </div>
   );
 }

@@ -14,7 +14,7 @@ function MoviesCard({ card }) {
                     {saveButton}
                 </Route>
                 <Route path="/saved-movies">
-                <button type="button" className='card__button-delite'></button>
+                    <button type="button" className='card__button-delite'></button>
                 </Route>
             </Switch>
             <div className="card__container">

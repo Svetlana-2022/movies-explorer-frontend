@@ -1,7 +1,17 @@
 .content {
     max-width: 1280px;
 }
+@media screen and (max-width: 768px) {
+    .content {
+        max-width: 768px;
+    }
+}
 @media screen and (max-width: 440px) {
+    .content {
+        max-width: 440px;
+    }
+}
+@media screen and (max-width: 320px) {
     .content {
         max-width: 320px;
     }

@@ -29,6 +29,9 @@
     text-decoration: none;
     color: #000;
 }
+.navigation__link:hover {
+    opacity: 0.6;
+}
 @media screen and (max-width: 320px) {
     .navigation__link {
         font-size: 10px;
@@ -41,4 +44,7 @@
 .navigation__profile {
     width: 100px;
     height: 30px;
+}
+.navigation__profile:hover {
+    opacity: 0.6;
 }

@@ -4,11 +4,11 @@ import SearchForm from '../SearchForm/SearchForm';
 
 function SavedMovies(props) {
     return (
-        <section className="saved-movies">
+        <main className="saved-movies">
             <SearchForm/>
             <MoviesCardList cards={props.cards}/>
             <div className="saved-movies__devider"></div>
-        </section>
+        </main>
     )
 }
 
