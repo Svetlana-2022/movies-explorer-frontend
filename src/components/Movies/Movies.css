@@ -1,0 +1,35 @@
+.movies {
+    max-width: 1280px;
+    display: block;
+    margin: auto;
+}
+.card-list__container {
+    width: 100%;
+    min-height: 166px;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.card-list__button {
+    width: 320px;
+    height: 36px;
+    background: #F9F9F9;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Inter',Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #000000;
+}
+.card-list__button:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 440px) {
+    .card-list__button {
+        width: 240px;
+    }
+}
