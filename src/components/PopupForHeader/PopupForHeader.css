@@ -76,14 +76,12 @@
 }
 .popup__link:hover {
     opacity: 0.6;
+    text-decoration: underline;
 }
 @media screen and (max-width: 420px) {
     .popup__link {
         margin-bottom: 24px;
     }
-}
-.popup__link_type_movies {
-    text-decoration: underline;
 }
 .popup__link-profile {
     display: flex;

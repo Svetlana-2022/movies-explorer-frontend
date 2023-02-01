@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
 function Register({ onRegister, textError }) {
-    console.log(onRegister);
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');

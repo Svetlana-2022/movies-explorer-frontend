@@ -1,7 +1,7 @@
 import React from 'react';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -18,7 +18,7 @@ import NotFound from '../NotFound/NotFound';
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -46,8 +46,6 @@ function App() {
   };
   const counter = calcCardsCounter(); 
   const [cardsCounter, setcardsCounter] = React.useState(counter.init);
-  const [isNotFound, setNotFound] = React.useState(false);
-  
 
   const history = useHistory();
   React.useEffect(() => {
@@ -60,7 +58,6 @@ function App() {
   }
   function handleUpdateUser({name, email}) {
     mainApi.updateProfile({ name, email }).then((newUser) => {
-        
         setCurrentUser(newUser.data);
     }).catch(err => {
       console.log(err);
@@ -76,14 +73,12 @@ function App() {
       setShowPreloader(true);
       const films = JSON.parse(localStorage.getItem('films') || '[]');
       if(films.length === 0) {
-        moviesApi.getMovies().then((res) => {//массив фильмов
-          console.log(res, '---resFilms')
+        moviesApi.getMovies().then((res) => {
           localStorage.setItem('films', JSON.stringify(res));
           setCards(res);
           filter(res);
         }).catch(err => {
           console.log(err);
-          setNotFound(true);
         })
         .finally(() => {
            setShowPreloader(false);
@@ -107,8 +102,7 @@ function App() {
       setFilteredCards(newCards);
       if(newCards.length === 0) {
         setShowText('Ничего не найдено');
-      }
-      
+      } 
     }
   }
   function filterSavedCards(request) {
@@ -119,7 +113,7 @@ function App() {
       if(savedFilms.length === 0) {
         const jwt = localStorage.getItem('jwt');
         mainApi.setToken(jwt);
-        mainApi.getMovies().then((res) => {//массив фильмов
+        mainApi.getMovies().then((res) => {
           console.log(res, '---resSaved');
           localStorage.setItem('savedFilms', JSON.stringify(res.data));
        
@@ -211,12 +205,7 @@ function App() {
   
   function closePopup() {
     setPopupOpen(false);
-    setNotFound(false);
   }
-
-  // function handleLoggedIn() {
-  //   setLoggedIn(true);
-  // }
   function handleRegister(name, email, password) {
     return mainApi.register(name, email, password).then((res) => {
       if(res) {
@@ -243,7 +232,8 @@ function App() {
   }
   function handleSignOut() {
     localStorage.removeItem('jwt');
-    history.push('/sign-in');
+    history.push('/');
+    setLoggedIn(false);
   }
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
@@ -253,7 +243,6 @@ function App() {
       if(user) {
         setLoggedIn(true);
         setCurrentUser(user);
-        
       } else {
         handleSignOut(); 
       }
@@ -263,7 +252,6 @@ function App() {
     });
   }
 
-   
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -281,13 +269,10 @@ function App() {
           <Route path="/sign-in">
             <Login onLogin={handleLogin} textError={textError}/>
           </Route>
-          <Route path="*">
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
-          </Route>
+          <Route path="*" element={<NotFound />}/>
         </Switch>
         <Footer/>
         <PopupForHeader isOpen={popupOpen} onClose={closePopup}/>
-        <NotFound isOpen={isNotFound} onClose={closePopup}/>
       </CurrentUserContext.Provider>
     </div>
   );

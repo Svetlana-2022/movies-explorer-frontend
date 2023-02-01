@@ -11,7 +11,7 @@ function PopupForHeader(props) {
                 <button type="button" className="popup__button" onClick={props.onClose}></button>
                 <div className="popup__links">
                     <Link to="/" className="popup__link">Главная</Link>
-                    <Link to="/movies" className="popup__link popup__link_type_movies">Фильмы</Link>
+                    <Link to="/movies" className="popup__link">Фильмы</Link>
                     <Link to="/saved-movies" className="popup__link">Сохранённые фильмы</Link>
                     <Link to="/profile" className="popup__link-profile">
                         <img className="popup__link-img" src={profile} alt="аккаунт"/>

@@ -10,7 +10,7 @@ function Header(props) {
     return (
         <Switch>
             <Route exact path="/">
-                {/* {props.loggedIn &&     
+                {props.loggedIn &&     
                 <header className="header header_type_white">
                     <Link to="/" className="header__container-logo">
                         <img className="header__logo" src={logo} alt="логотип"/>
@@ -20,7 +20,8 @@ function Header(props) {
                     </div>
                     <Navigation/>
                 </header>
-                } */}
+                }
+                {!props.loggedIn &&
                 <header className="header">
                     <Link to="/" className="header__container-logo">
                         <img className="header__logo" src={logo} alt="логотип"/>
@@ -32,6 +33,7 @@ function Header(props) {
                         </div>
                     </div>
                 </header>
+                }
             </Route>
             <Route path="/movies">
                 <header className="header header_type_white">

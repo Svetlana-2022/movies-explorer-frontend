@@ -3,7 +3,7 @@ import './Login.css';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
-function Login({ onLogin, textError }) {
+function Login({ onLogin, textError, loggedIn}) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [emailError, setEmailError] = React.useState('');
@@ -37,10 +37,10 @@ function Login({ onLogin, textError }) {
     }
     const handleSubmit = (e) =>{
         e.preventDefault();
-        
-        if(!email || !password) return;
 
-        onLogin(email, password);
+        if(!email || !password) return;
+        
+         onLogin(email, password);
     }
     return (
         <main className="login">
