@@ -10,3 +10,6 @@ https://www.figma.com/file/pdPf4YWz7bXWLK7F4xbRLr/Diploma_finally?node-id=932%3A
 
 # Ссылка на сайт:
 https://diplom.svetlana.nomoredomains.club/
+
+# Ссылка на  пул реквест:
+https://github.com/Svetlana-2022/movies-explorer-frontend/pull/3
