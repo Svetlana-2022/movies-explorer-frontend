@@ -7,3 +7,6 @@
 
 # Ссылка на фигму: 
 https://www.figma.com/file/pdPf4YWz7bXWLK7F4xbRLr/Diploma_finally?node-id=932%3A3593&t=HJv4W5x0s7BgVEOF-1
+
+# Ссылка на сайт:
+https://diplom.svetlana.nomoredomains.club/
