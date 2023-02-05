@@ -47,6 +47,7 @@ function App() {
   const counter = calcCardsCounter(); 
   const [cardsCounter, setcardsCounter] = React.useState(counter.init);
   const [isUpdateSearch, setUpdateSearch] = React.useState(false);
+  
   console.log(currentUser, '--currentUser');
 
   const history = useHistory();
@@ -61,10 +62,8 @@ function App() {
   function handleUpdateUser({name, email}) {
     mainApi.updateProfile({ name, email }).then((newUser) => {
         setCurrentUser(newUser.data);
-        setText('Вы успешно обновили профиль!');
     }).catch(err => {
       console.log(err);
-      setText('При обновлении профиля произошла ошибка.');
     });
   }
 
@@ -101,7 +100,7 @@ function App() {
     
     function filter(cards) {
       const newCards = cards.filter((card) => {
-        const isValidName = card.nameRU.includes(request.name);
+        const isValidName = card.nameRU.toLowerCase().includes(request.name.toLowerCase());
         const isShorts = request.isShorts ? card.duration <= 40 : true;
         return isValidName && isShorts; 
       });
@@ -141,8 +140,8 @@ function App() {
     
     function filter(cards) {
       const newCards = cards.filter((card) => {
-        const isValidName = card.nameRU.includes(request.name);
-        const isShorts = card.isShorts ? card.duration <= 40 : true;
+        const isValidName = card.nameRU.toLowerCase().includes(request.name.toLowerCase());
+        const isShorts = request.isShorts ? card.duration <= 40 : true;
         return isValidName && isShorts; 
       });
       setFilteredSavedCards(newCards);
@@ -215,12 +214,11 @@ function App() {
   function handleRegister(name, email, password) {
     return mainApi.register(name, email, password).then((res) => {
       if(res) {
-        history.push('/sign-in');
-        setTextError('Вы успешно зарегистрировались!');
+        return handleLogin(email, password);
+        
       }
     }).catch(err => {
       console.log(err);
-      setTextError('При регистрации пользователя произошла ошибка.');
     });
   }
   function handleLogin(email, password) {
@@ -236,15 +234,10 @@ function App() {
       }).catch(err => {
         console.log(err);
         setLoggedIn(false);
-        setTextError('При логировании пользователя произошла ошибка.');
       });
   }
   // При логауте пользователя информацию в хранилище и стейт-переменных из useState уничтожать.
   function handleSignOut() {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('savedFilms');
-    localStorage.removeItem('films');
-    localStorage.removeItem('searchSaved');
     localStorage.clear();
     setCurrentUser({});
     setCards([]);
@@ -253,23 +246,26 @@ function App() {
     setFilteredSavedCards([]);
     history.push('/');
     setLoggedIn(false);
-    mainApi.setToken('');
   }
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
     mainApi.setToken(jwt);
-    if (!jwt) return;
-    mainApi.getUser().then((user) => {
-      if(user) {
-        setLoggedIn(true);
-        setCurrentUser(user);
-      } else {
-        handleSignOut(); 
-      }
-    }).catch(err => {
-      console.log(err);
+    if (jwt) {
+      mainApi.getUser().then((user) => {
+        if(user) {
+          setLoggedIn(true);
+          setCurrentUser(user);
+        } else {
+          handleSignOut(); 
+        }
+      }).catch(err => {
+        console.log(err);
+        handleSignOut();
+      });
+    } else {
       handleSignOut();
-    });
+    }
+    
   }
 
   return (
@@ -290,7 +286,7 @@ function App() {
             <Login onLogin={handleLogin} textError={textError}/>
           </Route>
           <Route path="*">
-            {<NotFound />}
+            <NotFound />
           </Route>
         </Switch>
         <Footer/>

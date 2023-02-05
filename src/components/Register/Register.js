@@ -31,10 +31,11 @@ function Register({ onRegister, textError }) {
     }
     const handleEmail = (e) => {
         setEmail(e.target.value);
-        //проверяем валидацию email
-        if(!e.target.value) {
-            setFormValid(false);
-        }
+        // //проверяем валидацию email
+        // const re = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+        // if(!re.test(String(e.target.value).toLowerCase())) {
+        //     setFormValid(false);
+        // }
         setEmailError(e.target.validationMessage);  
     }
     const HandlePassword = (e) => {
@@ -68,7 +69,7 @@ function Register({ onRegister, textError }) {
                 </fieldset>
                 <fieldset className="form__fieldset">
                     <label className="form__label">E-mail</label>
-                    <input id="email" type="email" value={email.email} onChange={handleEmail} className="form__input form__input_type_email" placeholder="Email" name="email" minLength="2" maxLength="40" required/>
+                    <input id="email" type="email" pattern=".+@.+\..+" value={email.email} onChange={handleEmail} className="form__input form__input_type_email" placeholder="Email" name="email" minLength="2" maxLength="40" required/>
                     {emailError && <div className="form__error">{emailError}</div>}
                 </fieldset>
                 <fieldset className="form__fieldset">

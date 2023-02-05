@@ -51,7 +51,7 @@ function Login({ onLogin, textError, loggedIn}) {
             <form onSubmit={handleSubmit} className="form form_type_login" name="text">
                 <fieldset className="form__fieldset">
                     <label className="form__label">E-mail</label>
-                    <input id="email" type="email" value={email.email} onChange={handleEmail} className="form__input form__input_type_email" placeholder="Email" name="email" minLength="2" maxLength="40" required/>
+                    <input id="email" type="email" pattern=".+@.+\..+" value={email.email} onChange={handleEmail} className="form__input form__input_type_email" placeholder="Email" name="email" minLength="2" maxLength="40" required/>
                     {emailError && <div className="form__text-error">{emailError}</div>}
                 </fieldset>
                 <fieldset className="form__fieldset">

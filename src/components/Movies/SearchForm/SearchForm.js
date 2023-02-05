@@ -1,22 +1,25 @@
 import React from "react";
 import './SearchForm.css';
+import { useLocation } from "react-router-dom";
  
 function SearchForm(props) {
-    
+    const { pathname } = useLocation();
     const [state, setState] = React.useState({name: '', isShorts: false});
     const [textError, setTextError] = React.useState('');
+
     console.log(state);
 
     React.useEffect(() => {
-        const searchSaved = JSON.parse(localStorage.getItem('searchSaved') || '{"name":"", "isShorts":false}');
-        setState(searchSaved);
-        props.filterCards(state);
+        if(pathname === '/movies') {
+            const searchSaved = JSON.parse(localStorage.getItem('searchSaved') || '{"name":"", "isShorts":false}');
+            setState(searchSaved);
+            props.filterCards(searchSaved);
+        }
     }, []);
     React.useEffect(() => {
-        if(props.isUpdateSearch) {
+        if(props.isUpdateSearch || pathname === '/saved-movies') {
             props.filterCards(state);
-        }
-        
+        } 
     }, [props.isUpdateSearch]);
    
     const handleChange = (e) => {

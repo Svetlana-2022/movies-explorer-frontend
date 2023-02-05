@@ -59,7 +59,7 @@ function Profile(props) {
                 {nameError && <div className="profile__error" style={{color:'red'}}>{nameError}</div>}
                 <div className="profile__container profile__container_type_email">
                     <p className="profile__email">E-mail</p>
-                    <input id="email" type="email" value={email} onChange={(e)=>handleEmail(e)}className="profile__email" placeholder="email" name="email" minLength="2" maxLength="40" required/>
+                    <input id="email" type="email" pattern=".+@.+\..+" value={email} onChange={(e)=>handleEmail(e)}className="profile__email" placeholder="email" name="email" minLength="2" maxLength="40" required/>
                 </div>
                 {emailError && <div className="profile__error">{emailError}</div>}
                 <div className="profile__container profile__container_type_button">
