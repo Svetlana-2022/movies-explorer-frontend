@@ -1,20 +1,20 @@
 import './MoviesCard.css';
 import React from "react";
 import { Switch, Route } from 'react-router-dom';
-// const urlMovies = 'https://api.nomoreparties.co/';
 
 function MoviesCard({ card, onCardSaved, savedCards }) {
-    
-    const savedCard=  savedCards.find(item => item.movieId === card.id);
-    const isSaved = savedCard !== undefined ;
-   
+    // Определяем, сохранена ли карточка
+    const savedCard =  savedCards.find(item => item.movieId === card.id);
+    const isSaved = savedCard !== undefined  ;
+
     function handleSavedClick() {
         onCardSaved(card); 
     }
     // Создаём переменную, которую после зададим для кнопки saved
     const saveButton = !isSaved ? 
     (<button type="button" className='card__button-save' onClick={()=>handleSavedClick()}></button>) : 
-    (<button type="button" className='card__button-saved'></button>);
+    (<button type="button" className='card__button-saved' onClick={()=>handleSavedClick()}></button>); 
+    
     const newCard = {
         country: card.country,
         director: card.director,
@@ -32,7 +32,9 @@ function MoviesCard({ card, onCardSaved, savedCards }) {
     
     return (
         <li className="card">
-            <img className="card__img" src={newCard.image} alt={newCard.nameRU}/>
+            <a href={newCard.trailerLink}>
+                <img className="card__img" src={newCard.image} alt={newCard.nameRU}/>
+            </a>
             <Switch>
                 <Route path="/movies">
                     {saveButton}

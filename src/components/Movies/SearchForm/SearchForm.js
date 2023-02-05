@@ -5,6 +5,19 @@ function SearchForm(props) {
     
     const [state, setState] = React.useState({name: '', isShorts: false});
     const [textError, setTextError] = React.useState('');
+    console.log(state);
+
+    React.useEffect(() => {
+        const searchSaved = JSON.parse(localStorage.getItem('searchSaved') || '{"name":"", "isShorts":false}');
+        setState(searchSaved);
+        props.filterCards(state);
+    }, []);
+    React.useEffect(() => {
+        if(props.isUpdateSearch) {
+            props.filterCards(state);
+        }
+        
+    }, [props.isUpdateSearch]);
    
     const handleChange = (e) => {
         const newState = {...state, name: e.target.value}
@@ -22,7 +35,9 @@ function SearchForm(props) {
     }
     const handleSubmit = (e)=>{
         e.preventDefault();
-        props.filterCards(state);   
+    
+        props.filterCards(state);
+           
     }
 
     return (

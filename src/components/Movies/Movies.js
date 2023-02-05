@@ -7,7 +7,7 @@ function Movies(props) {
     
     return (
         <main className="movies">
-            <SearchForm   filterCards={props.filterCards}/>
+            <SearchForm   filterCards={props.filterCards} />
             <MoviesCardList cards={props.cards} isShowPreloader={props.isShowPreloader} showText={props.showText} savedCards={props.savedCards} onCardSaved={props.onCardSaved} loadCards={props.loadCards}/>
             {props.hasCards ? (
                 <div className='card-list__container'>

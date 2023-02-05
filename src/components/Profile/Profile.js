@@ -30,7 +30,7 @@ function Profile(props) {
     function handleName(e) {
         setName(e.target.value);
         setNameError(e.target.validationMessage);
-        console.log(e.target.validationMessage);
+        // console.log(e.target.validationMessage);
     }
     function handleEmail(e) {
         setEmail(e.target.value);

@@ -18,7 +18,7 @@ import NotFound from '../NotFound/NotFound';
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -46,12 +46,14 @@ function App() {
   };
   const counter = calcCardsCounter(); 
   const [cardsCounter, setcardsCounter] = React.useState(counter.init);
+  const [isUpdateSearch, setUpdateSearch] = React.useState(false);
+  console.log(currentUser, '--currentUser');
 
   const history = useHistory();
   React.useEffect(() => {
     tokenCheck();
   }, []);
-
+ 
   function loadSavedCards() {
     const counters = calcCardsCounter();
     setcardsCounter(cardsCounter + counters.more);
@@ -59,6 +61,7 @@ function App() {
   function handleUpdateUser({name, email}) {
     mainApi.updateProfile({ name, email }).then((newUser) => {
         setCurrentUser(newUser.data);
+        setText('Вы успешно обновили профиль!');
     }).catch(err => {
       console.log(err);
       setText('При обновлении профиля произошла ошибка.');
@@ -69,14 +72,17 @@ function App() {
     setShowPreloader(true);
   }
   function filterCards(request) {
+    //  при каждом поиске на странице фильмов результаты поиска фильмов нужно сохранять в localstorage
+    // В сохраняемые данные должны входить и строка поиска и статус чекбокса «Короткометражки»
+    localStorage.setItem('searchSaved', JSON.stringify(request));
     if(cards.length === 0) {
       setShowPreloader(true);
       const films = JSON.parse(localStorage.getItem('films') || '[]');
       if(films.length === 0) {
         moviesApi.getMovies().then((res) => {
           localStorage.setItem('films', JSON.stringify(res));
-          setCards(res);
           filter(res);
+          setCards(res);
         }).catch(err => {
           console.log(err);
         })
@@ -106,7 +112,6 @@ function App() {
     }
   }
   function filterSavedCards(request) {
-    localStorage.setItem('searchSaved', JSON.stringify(request));
     if(savedCards.length === 0) {
       setShowPreloader(true);
       const savedFilms = JSON.parse(localStorage.getItem('savedFilms') || '[]');
@@ -116,9 +121,8 @@ function App() {
         mainApi.getMovies().then((res) => {
           console.log(res, '---resSaved');
           localStorage.setItem('savedFilms', JSON.stringify(res.data));
-       
-          setSavedCards(res.data);
           filter(res.data);
+          setSavedCards(res.data);
         }).catch(err => {
           console.log(err);
         })
@@ -192,12 +196,14 @@ function App() {
     
   }
   function handleCardDelete(savedCard) {
+    setUpdateSearch(false);
     mainApi.deleteMovie(savedCard._id).then(() => {
       setSavedCards(() =>{
         const newCards = (savedCards.filter((c) => c._id !== savedCard._id))
         localStorage.setItem('savedFilms', JSON.stringify(newCards));
         return newCards;
       })
+      setUpdateSearch(true);
     }).catch(err => {
       console.log(err);
     }); 
@@ -210,6 +216,7 @@ function App() {
     return mainApi.register(name, email, password).then((res) => {
       if(res) {
         history.push('/sign-in');
+        setTextError('Вы успешно зарегистрировались!');
       }
     }).catch(err => {
       console.log(err);
@@ -222,18 +229,31 @@ function App() {
         if(!data.token) throw new Error('Missing jwt');
 
         localStorage.setItem('jwt', data.token);
+        setLoggedIn(true);
         tokenCheck();
         history.push('/movies');
          
       }).catch(err => {
         console.log(err);
+        setLoggedIn(false);
         setTextError('При логировании пользователя произошла ошибка.');
       });
   }
+  // При логауте пользователя информацию в хранилище и стейт-переменных из useState уничтожать.
   function handleSignOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('savedFilms');
+    localStorage.removeItem('films');
+    localStorage.removeItem('searchSaved');
+    localStorage.clear();
+    setCurrentUser({});
+    setCards([]);
+    setSavedCards([]);
+    setFilteredCards([]);
+    setFilteredSavedCards([]);
     history.push('/');
     setLoggedIn(false);
+    mainApi.setToken('');
   }
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
@@ -261,7 +281,7 @@ function App() {
             <Main/>
           </Route>
           <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies} cards={filteredCards.filter((c, i) => i < cardsCounter)} filterCards={filterCards} onClickSubmit={handleClickSubmit} onCardSaved={handleCardSaved} isShowPreloader={isShowPreloader} showText={showText} savedCards={savedCards} loadCards={loadSavedCards} hasCards={filteredCards.length >= cardsCounter}/>
-          <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} cards={filteredSavedCards} filterSavedCards={filterSavedCards} onCardSaved={handleCardDelete} savedCards={savedCards} loadCards={loadSavedCards}/>
+          <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} cards={filteredSavedCards} filterSavedCards={filterSavedCards} onCardSaved={handleCardDelete} savedCards={savedCards} loadCards={loadSavedCards} isUpdateSearch={isUpdateSearch}/>
           <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} currentUser={currentUser} onUpdateUser={handleUpdateUser} text={text} signOut={handleSignOut}/>
           <Route path="/sign-up">
             <Register onRegister={handleRegister} textError={textError}/>
@@ -269,7 +289,9 @@ function App() {
           <Route path="/sign-in">
             <Login onLogin={handleLogin} textError={textError}/>
           </Route>
-          <Route path="*" element={<NotFound />}/>
+          <Route path="*">
+            {<NotFound />}
+          </Route>
         </Switch>
         <Footer/>
         <PopupForHeader isOpen={popupOpen} onClose={closePopup}/>
