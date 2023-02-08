@@ -1,6 +1,5 @@
 const configMain = {
-    // url: 'https://api.diplom.svetlana.nomoredomains.club',
-    url: 'http://localhost:3001',
+    url: 'https://api.diplom.svetlana.nomoredomains.club',
       headers: {
         authorization: '',
         'Content-Type': 'application/json'
