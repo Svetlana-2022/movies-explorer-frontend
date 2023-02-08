@@ -31,11 +31,10 @@ function Register({ onRegister, textError }) {
     }
     const handleEmail = (e) => {
         setEmail(e.target.value);
-        // //проверяем валидацию email
-        // const re = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
-        // if(!re.test(String(e.target.value).toLowerCase())) {
-        //     setFormValid(false);
-        // }
+        //проверяем валидацию email
+        if(!e.target.value) {
+            setFormValid(false);
+        }
         setEmailError(e.target.validationMessage);  
     }
     const HandlePassword = (e) => {
@@ -54,6 +53,7 @@ function Register({ onRegister, textError }) {
             email,
             password
         );
+        
     }
     return (
         <main className="register">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -19,6 +19,7 @@ import NotFound from '../NotFound/NotFound';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
+  const [isAuth, setIsAuth] = React.useState(false);
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -29,11 +30,11 @@ function App() {
   const [savedCards,  setSavedCards] = React.useState([]);
   const [text, setText] = React.useState('');
   const [textError, setTextError] = React.useState('');
-  
+  const [isUpdateSearch, setUpdateSearch] = React.useState(false);
   const calcCardsCounter = () => {
     const counter = { init: 12, more: 3 };
   
-    if (window.innerWidth < 1180) {
+    if (window.innerWidth < 1170) {
       counter.init = 8;
       counter.more = 2;
     }
@@ -44,17 +45,18 @@ function App() {
     
     return counter;
   };
-  const counter = calcCardsCounter(); 
-  const [cardsCounter, setcardsCounter] = React.useState(counter.init);
-  const [isUpdateSearch, setUpdateSearch] = React.useState(false);
-  
-  console.log(currentUser, '--currentUser');
-
+  const counter = calcCardsCounter();
+  const [cardsCounter, setcardsCounter] = React.useState(counter.init); 
+  const localtion = useLocation();
   const history = useHistory();
+
   React.useEffect(() => {
     tokenCheck();
   }, []);
- 
+  React.useEffect(() => {
+    setText('');
+  }, [localtion.pathname]);
+
   function loadSavedCards() {
     const counters = calcCardsCounter();
     setcardsCounter(cardsCounter + counters.more);
@@ -62,8 +64,10 @@ function App() {
   function handleUpdateUser({name, email}) {
     mainApi.updateProfile({ name, email }).then((newUser) => {
         setCurrentUser(newUser.data);
+        setText('Данные успешно обновлены');
     }).catch(err => {
-      console.log(err);
+      console.log(err.message);
+      setText(err.message);
     });
   }
 
@@ -78,10 +82,12 @@ function App() {
       setShowPreloader(true);
       const films = JSON.parse(localStorage.getItem('films') || '[]');
       if(films.length === 0) {
-        moviesApi.getMovies().then((res) => {
-          localStorage.setItem('films', JSON.stringify(res));
-          filter(res);
-          setCards(res);
+        Promise.all([moviesApi.getMovies(), mainApi.getMovies()])
+        .then(([resMovies, resSaveds]) => {
+          setSavedCards(resSaveds.data);
+          localStorage.setItem('films', JSON.stringify(resMovies));
+          filter(resMovies);
+          setCards(resMovies);
         }).catch(err => {
           console.log(err);
         })
@@ -118,7 +124,6 @@ function App() {
         const jwt = localStorage.getItem('jwt');
         mainApi.setToken(jwt);
         mainApi.getMovies().then((res) => {
-          console.log(res, '---resSaved');
           localStorage.setItem('savedFilms', JSON.stringify(res.data));
           filter(res.data);
           setSavedCards(res.data);
@@ -219,20 +224,24 @@ function App() {
       }
     }).catch(err => {
       console.log(err);
+      setTextError(err.message);
     });
   }
   function handleLogin(email, password) {
     return mainApi.authorize(email, password)
     .then((data) =>{
-        if(!data.token) throw new Error('Missing jwt');
-
-        localStorage.setItem('jwt', data.token);
-        setLoggedIn(true);
-        tokenCheck();
-        history.push('/movies');
-         
+        if(data.token) {
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          setIsAuth(true);
+          tokenCheck();
+          history.push('/movies');
+        } else {
+          setLoggedIn(false);
+        }
       }).catch(err => {
         console.log(err);
+        setTextError(err.message);
         setLoggedIn(false);
       });
   }
@@ -244,8 +253,9 @@ function App() {
     setSavedCards([]);
     setFilteredCards([]);
     setFilteredSavedCards([]);
-    history.push('/');
     setLoggedIn(false);
+    setIsAuth(false);
+    history.push('/');
   }
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
@@ -254,6 +264,7 @@ function App() {
       mainApi.getUser().then((user) => {
         if(user) {
           setLoggedIn(true);
+          setIsAuth(true);
           setCurrentUser(user);
         } else {
           handleSignOut(); 
@@ -280,10 +291,10 @@ function App() {
           <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} cards={filteredSavedCards} filterSavedCards={filterSavedCards} onCardSaved={handleCardDelete} savedCards={savedCards} loadCards={loadSavedCards} isUpdateSearch={isUpdateSearch}/>
           <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} currentUser={currentUser} onUpdateUser={handleUpdateUser} text={text} signOut={handleSignOut}/>
           <Route path="/sign-up">
-            <Register onRegister={handleRegister} textError={textError}/>
+            {isAuth ? <Redirect to="/movies"/> : <Register onRegister={handleRegister} textError={textError}/>}
           </Route>
           <Route path="/sign-in">
-            <Login onLogin={handleLogin} textError={textError}/>
+            {isAuth ? <Redirect to="/movies"/> : <Login onLogin={handleLogin} textError={textError}/>}
           </Route>
           <Route path="*">
             <NotFound />

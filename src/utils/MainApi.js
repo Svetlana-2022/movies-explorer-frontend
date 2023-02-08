@@ -1,5 +1,6 @@
 const configMain = {
-    url: 'https://api.diplom.svetlana.nomoredomains.club',
+    // url: 'https://api.diplom.svetlana.nomoredomains.club',
+    url: 'http://localhost:3001',
       headers: {
         authorization: '',
         'Content-Type': 'application/json'
@@ -12,11 +13,13 @@ export class MainApi {
         this._headers = headers;
     }
     _getResponseData(res) {
+      return res.json().then((data) => {
         if(res.ok) {
-          return res.json();
+          return data;
         } else {
-          Promise.reject(`Ошибка ${res.status}`);
+           return Promise.reject(new Error(data.message || 'Неизвестная ошибка'));
         }
+      })
     }
     setToken(jwt) {
       this._headers.authorization = jwt;

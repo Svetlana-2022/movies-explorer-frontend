@@ -37,10 +37,10 @@ function Login({ onLogin, textError, loggedIn}) {
     }
     const handleSubmit = (e) =>{
         e.preventDefault();
-
         if(!email || !password) return;
         
          onLogin(email, password);
+
     }
     return (
         <main className="login">

@@ -27,12 +27,12 @@ function MoviesCard({ card, onCardSaved, savedCards }) {
         movieId: card.id,
         _id: card._id || '',
         nameRU: card.nameRU,
-        nameEN: card.nameEN   
+        nameEN: card.nameEN, 
       }
     
     return (
         <li className="card">
-            <a href={newCard.trailerLink}>
+            <a href={newCard.trailerLink} target="_blank" rel="noopener noreferrer">
                 <img className="card__img" src={newCard.image} alt={newCard.nameRU}/>
             </a>
             <Switch>
