@@ -287,7 +287,7 @@ function App() {
           <Route exact path="/">
             <Main/>
           </Route>
-          <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies} cards={filteredCards.filter((c, i) => i < cardsCounter)} filterCards={filterCards} onClickSubmit={handleClickSubmit} onCardSaved={handleCardSaved} isShowPreloader={isShowPreloader} showText={showText} savedCards={savedCards} loadCards={loadSavedCards} hasCards={filteredCards.length >= cardsCounter}/>
+          <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies} cards={filteredCards.filter((c, i) => i < cardsCounter)} filterCards={filterCards} onClickSubmit={handleClickSubmit} onCardSaved={handleCardSaved} isShowPreloader={isShowPreloader} showText={showText} savedCards={savedCards} loadCards={loadSavedCards} hasCards={filteredCards.length >= cardsCounter+1}/>
           <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} cards={filteredSavedCards} filterSavedCards={filterSavedCards} onCardSaved={handleCardDelete} savedCards={savedCards} loadCards={loadSavedCards} isUpdateSearch={isUpdateSearch}/>
           <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} currentUser={currentUser} onUpdateUser={handleUpdateUser} text={text} signOut={handleSignOut}/>
           <Route path="/sign-up">
