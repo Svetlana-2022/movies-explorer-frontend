@@ -8,7 +8,7 @@ function SearchForm(props) {
     const [textError, setTextError] = React.useState('');
 
     React.useEffect(() => {
-        if(pathname === '/movies') {
+        if(pathname === '/movies' && localStorage.getItem('searchSaved')) {
             const searchSaved = JSON.parse(localStorage.getItem('searchSaved') || '{"name":"", "isShorts":false}');
             setState(searchSaved);
             props.filterCards(searchSaved);
