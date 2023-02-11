@@ -38,14 +38,22 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
+    text-align: right;
     color: #000;
+    border: none;
+}
+.container-err {
+    display: block;
+}
+.profile__name_active {
+    text-align: right;
     border: none;
 }
 .profile__container_type_email {
     padding-top: 17px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 220px;
+    
 }
 .profile__email {
     font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -53,15 +61,40 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
+    text-align: right;
     color: #000;
     border: none;
+}
+.profile__email_active {
+    text-align: right;
+    border: none;
+}
+.profile__error {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: red;
+    margin-top: 7px;
 }
 .profile__container_type_button {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-top: 220px;
 }
-.profile__button {
+.profile__text-error {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: #FF004C;
+    margin-bottom: 20px;
+}
+.profile__submit-button {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -71,14 +104,20 @@
     background-color: #fff;
     color: #000;
 }
-.profile__button:hover {
+.profile__submit-button:hover {
     opacity: 0.6;
 }
-.profile__button_type_exit {
-    margin-top: 16px;
+.profile__button {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
     border: none;
+    background-color: #fff;
+    margin-top: 16px;
     color: #EE3465;
 }
-.profile__button_type_exit:hover {
+.profile__button:hover {
     opacity: 0.6;
 }

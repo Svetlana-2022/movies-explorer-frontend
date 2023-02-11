@@ -109,7 +109,7 @@
     display: block;
     width: 36px;
     height: 20px;
-    background: #2BE080;
+    background: #F5F5F5;
     border-radius: 20px;
     border: none;
     cursor: pointer;
@@ -127,7 +127,7 @@
     transition: ease-in .5s;
 }
 .search__switch:checked + .search__fake {
-    background-color: #F5F5F5;
+    background-color: #2BE080;
 }
 .search__switch:checked + .search__fake::before {
     left: 18px;

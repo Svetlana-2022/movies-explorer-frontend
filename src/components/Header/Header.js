@@ -33,7 +33,7 @@ function Header(props) {
                         </div>
                     </div>
                 </header>
-            }
+                }
             </Route>
             <Route path="/movies">
                 <header className="header header_type_white">
